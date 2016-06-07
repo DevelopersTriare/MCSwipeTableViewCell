@@ -15,6 +15,7 @@ static NSUInteger const kMCNumItems = 7;
 
 @property (nonatomic, assign) NSUInteger nbItems;
 @property (nonatomic, strong) MCSwipeTableViewCell *cellToDelete;
+@property (nonatomic, weak) MCSwipeTableViewCell *swipedCell;
 
 @end
 
@@ -224,15 +225,23 @@ static NSUInteger const kMCNumItems = 7;
 
 #pragma mark - MCSwipeTableViewCellDelegate
 
+- (BOOL)swipeTableViewCellShouldStartSwiping:(MCSwipeTableViewCell *)cell
+{
+    return !_swipedCell;
+}
 
 // When the user starts swiping the cell this method is called
 - (void)swipeTableViewCellDidStartSwiping:(MCSwipeTableViewCell *)cell {
     // NSLog(@"Did start swiping the cell!");
+
+    _swipedCell = cell;
 }
 
 // When the user ends swiping the cell this method is called
 - (void)swipeTableViewCellDidEndSwiping:(MCSwipeTableViewCell *)cell {
     // NSLog(@"Did end swiping the cell!");
+
+    _swipedCell = nil;
 }
 
 // When the user is dragging, this method is called and return the dragged percentage from the border

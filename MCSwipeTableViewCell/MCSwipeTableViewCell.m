@@ -341,13 +341,20 @@ typedef NS_ENUM(NSUInteger, MCSwipeTableViewCellDirection) {
             if (point.x > 0 && !_modeForState1 && !_modeForState2) {
                 return NO;
             }
-            
-            // We notify the delegate that we just started dragging
-            if ([_delegate respondsToSelector:@selector(swipeTableViewCellDidStartSwiping:)]) {
-                [_delegate swipeTableViewCellDidStartSwiping:self];
+
+            BOOL shouldStart = YES;
+
+            if ( [_delegate respondsToSelector:@selector(swipeTableViewCellShouldStartSwiping:)] )
+            {
+                shouldStart = [_delegate swipeTableViewCellShouldStartSwiping:self];
             }
             
-            return YES;
+            // We notify the delegate that we just started dragging
+            if ( shouldStart && [_delegate respondsToSelector:@selector(swipeTableViewCellDidStartSwiping:)]) {
+                [_delegate swipeTableViewCellDidStartSwiping:self];
+            }
+
+            return shouldStart;
         }
     }
     

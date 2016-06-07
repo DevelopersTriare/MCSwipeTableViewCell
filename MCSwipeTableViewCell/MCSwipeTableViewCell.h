@@ -181,6 +181,8 @@ typedef void (^MCSwipeCompletionBlock)(MCSwipeTableViewCell *cell, MCSwipeTableV
 
 @optional
 
+- (BOOL)swipeTableViewCellShouldStartSwiping:(MCSwipeTableViewCell *)cell;
+
 /**
  *  Called when the user starts swiping the cell.
  *
